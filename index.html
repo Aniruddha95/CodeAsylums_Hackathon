@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Youtube</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>    
+<h1>videos</h1>
+<div>
+<ul id="pictures"></ul>
+<button onclick="genre('party')" >Party songs</button>
+<button onclick="genre('sad')" >Sad songs</button>
+<button  onclick="genre('happy')" >Happy songs</button>
+<button  onclick="genre('chill')">Chill songs</button>  
+<input type="text" placeholder="Search here" id="search">
+<button onclick="genre('z')">GO</button>
+<br><br><br>
+<div id="vid"></div>
+</div>
+</body>
+<script>                
+function genre(x){
+   if(x=='z')
+   x=document.getElementById('search').value;
+   console.log(x);
+const divv=document.getElementById('vid');
+divv.innerHTML=" ";
+const url = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=''&maxResults=50&key=AIzaSyCGyBLWD-uYONjQqdmqBvhCiFy2cGhtsnI&q="+x;
+fetch(url)
+.then((resp) => resp.json())
+.then(function(data) {
+let pictures = data.items;
+return pictures.map(function(id1) {
+    txt = document.createElement('text');
+ txt.innerText = id1.id.videoId
+ var s = "https://www.youtube.com/embed/"+txt.innerText ;  
+ let itt =document.createElement('iframe');
+ itt.setAttribute('src', s);
+ itt.setAttribute('width', '600');
+ itt.setAttribute('height', '600');
+ divv.appendChild(itt);
+})
+})
+
+
+.catch(function(error) {
+console.log(JSON.stringify(error));
+});
+}
+
+</script>
+
+</html>
